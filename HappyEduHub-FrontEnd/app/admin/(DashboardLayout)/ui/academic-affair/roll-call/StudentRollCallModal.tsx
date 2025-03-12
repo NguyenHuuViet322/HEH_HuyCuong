@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Table } from 'flowbite-react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-const StudentExcelModal = ({
+const StudentRollCallModal = ({
   isOpen,
   onClose,
   studentData,
@@ -49,34 +49,25 @@ const StudentExcelModal = ({
           <Table hoverable>
             <Table.Head className="bg-blue-500 text-white">
               <Table.HeadCell>#</Table.HeadCell>
-              <Table.HeadCell>Họ tên</Table.HeadCell>
-              <Table.HeadCell>Lớp</Table.HeadCell>
-              <Table.HeadCell>Trường</Table.HeadCell>
-              <Table.HeadCell>Email</Table.HeadCell>
-              <Table.HeadCell>SĐT Phụ Huynh</Table.HeadCell>
-              <Table.HeadCell>Địa chỉ</Table.HeadCell>
+              <Table.HeadCell>Mã học sinh</Table.HeadCell>
+              <Table.HeadCell>Tên học sinh</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y divide-gray-200">
               {studentData?.map((student, index) => (
                 <Table.Row
-                  key={student.user.id}
-                  className={`hover:bg-blue-50 transition cursor-pointer ${selectedStudents.includes(student.user.id) ? 'bg-blue-200' : ''}`}
-                  onClick={() => toggleSelectStudent(student.user.id)}
+                  key={student.id}
+                  className={`hover:bg-blue-50 transition cursor-pointer ${selectedStudents.includes(student.id) ? 'bg-blue-200' : ''}`}
+                  onClick={() => toggleSelectStudent(student.id)}
                 >
                   <Table.Cell>{index + 1}</Table.Cell>
                   <Table.Cell className="font-medium flex items-center justify-between">
-                    {student.user.name}
-                    {selectedStudents.includes(student.user.id) && (
+                    {student.user.code}
+                  </Table.Cell>
+                  <Table.Cell>{student.user.name}
+                    {selectedStudents.includes(student.id) && (
                       <CheckCircleIcon className="w-5 h-5 text-green-500" />
                     )}
                   </Table.Cell>
-                  <Table.Cell>{student.user.class}</Table.Cell>
-                  <Table.Cell>{student.user.school}</Table.Cell>
-                  <Table.Cell className="text-blue-500">
-                    {student.user.email}
-                  </Table.Cell>
-                  <Table.Cell>{student.user.first_contact_tel}</Table.Cell>
-                  <Table.Cell>{student.user.address}</Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
@@ -101,7 +92,6 @@ const StudentExcelModal = ({
             className="px-6 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-700 transition"
             disabled={selectedStudents.length === 0}
           >
-            {mode == 0 && `Đánh dấu vắng (${selectedStudents.length})`}
             {mode == 1 && `Xóa điểm danh (${selectedStudents.length})`}
           </button>
         </div>
@@ -110,4 +100,4 @@ const StudentExcelModal = ({
   );
 };
 
-export default StudentExcelModal;
+export default StudentRollCallModal;

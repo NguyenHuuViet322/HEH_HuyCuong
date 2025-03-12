@@ -108,10 +108,18 @@ const SidebarContent: MenuItem[] = [
     heading: 'Khóa học',
     children: [
       {
+        name: 'Điểm danh',
+        icon: 'solar:list-bold',
+        id: uniqueId(),
+        url: '/admin/ui/rollcall',
+        role: [RoleType.ADMIN],
+      },
+      {
         name: 'Danh sách khóa học',
         icon: 'solar:book-bookmark-outline',
         id: uniqueId(),
         url: '/admin/ui/course',
+        role: [RoleType.ADMIN,  RoleType.ACADEMIC_AFFAIR],
       },
       {
         name: 'Phê duyệt khóa học',
@@ -169,7 +177,7 @@ const SidebarContent: MenuItem[] = [
         id: uniqueId(),
         url: '/admin/ui/student',
         role: [RoleType.ADMIN],
-      },
+      }
       // {
       //   name: 'Thêm giáo viên',
       //   icon: 'solar:book-bookmark-outline',
@@ -178,58 +186,58 @@ const SidebarContent: MenuItem[] = [
       //   role: [RoleType.ADMIN],
       // },
     ],
-  },
-  {
-    heading: 'Utilities',
-    children: [
-      {
-        name: 'Typography',
-        icon: 'solar:text-circle-outline',
-        id: uniqueId(),
-        url: '/admin/ui/typography',
-        role: [RoleType.ADMIN],
-      },
-      {
-        name: 'Table',
-        icon: 'solar:bedside-table-3-linear',
-        id: uniqueId(),
-        url: '/admin/ui/table',
-        role: [RoleType.ADMIN],
-      },
-      {
-        name: 'Form',
-        icon: 'solar:password-minimalistic-outline',
-        id: uniqueId(),
-        url: '/admin/ui/form',
-        role: [RoleType.ADMIN],
-      },
-      {
-        name: 'Shadow',
-        icon: 'solar:airbuds-case-charge-outline',
-        id: uniqueId(),
-        url: '/admin/ui/shadow',
-        role: [RoleType.ADMIN],
-      },
-    ],
-  },
-  {
-    heading: 'Extra',
-    children: [
-      {
-        name: 'Icons',
-        icon: 'solar:smile-circle-outline',
-        id: uniqueId(),
-        url: '/admin/icons/solar',
-        role: [RoleType.ADMIN],
-      },
-      {
-        name: 'Sample Page',
-        icon: 'solar:notes-minimalistic-outline',
-        id: uniqueId(),
-        url: '/admin/sample-page',
-        role: [RoleType.ADMIN],
-      },
-    ],
+  // },
+  // {
+  //   heading: 'Utilities',
+  //   children: [
+  //     {
+  //       name: 'Typography',
+  //       icon: 'solar:text-circle-outline',
+  //       id: uniqueId(),
+  //       url: '/admin/ui/typography',
+  //       role: [RoleType.ADMIN],
+  //     },
+  //     {
+  //       name: 'Table',
+  //       icon: 'solar:bedside-table-3-linear',
+  //       id: uniqueId(),
+  //       url: '/admin/ui/table',
+  //       role: [RoleType.ADMIN],
+  //     },
+  //     {
+  //       name: 'Form',
+  //       icon: 'solar:password-minimalistic-outline',
+  //       id: uniqueId(),
+  //       url: '/admin/ui/form',
+  //       role: [RoleType.ADMIN],
+  //     },
+  //     {
+  //       name: 'Shadow',
+  //       icon: 'solar:airbuds-case-charge-outline',
+  //       id: uniqueId(),
+  //       url: '/admin/ui/shadow',
+  //       role: [RoleType.ADMIN],
+  //     },
+  //   ],
+  // },
+  // {
+  //   heading: 'Extra',
+  //   children: [
+  //     {
+  //       name: 'Icons',
+  //       icon: 'solar:smile-circle-outline',
+  //       id: uniqueId(),
+  //       url: '/admin/icons/solar',
+  //       role: [RoleType.ADMIN],
+  //     },
+  //     {
+  //       name: 'Sample Page',
+  //       icon: 'solar:notes-minimalistic-outline',
+  //       id: uniqueId(),
+  //       url: '/admin/sample-page',
+  //       role: [RoleType.ADMIN],
+  //     },
+    // ],
   },
 ];
 

@@ -23,12 +23,14 @@ import LessonAlterModal from '../../course/Component/LessonAlterModal';
 import StudentModal from './StudentModal';
 import BlogSpinner from '@/app/admin/components/dashboard/BlogSpinner';
 import { Mode } from '@mui/icons-material';
+import StudentRollCallModal from './StudentRollCallModal';
 
 const Lessons = (props: any) => {
   const { lessons } = props;
   const [isStudentModalOpen, setIsStudentModalOpen] = useState(false);
   const [studentData, setStudents] = useState([]);
   const [selectedLesson, setSelectedLesson] = useState(null);
+  const [rollcall, setRollCall] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [mode, setMode] = useState(0);
 
@@ -48,9 +50,36 @@ const Lessons = (props: any) => {
         };
         const response = await callApi('rollcall', 'POST', body);
         notify(
-          `Đánh dấu học sinh ${studentInfo.name} vắng thành công`,
+          `Đánh dấu học sinh vắng thành công`,
           'success'
         );
+        console.log(studentInfo)
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        notify(error.message, 'error');
+      }
+    });
+  };
+
+  const handleRemoveRollCall = async (selectedRollcall) => {
+    setIsStudentModalOpen(false);
+    setLoading(true);
+    selectedRollcall.map(async (student_id, index) => {
+      try {
+        const studentInfo = studentData.find(
+          (student) => student.id == student_id
+        );
+        const body = {
+          status: 'LATE',
+          note: '',
+        };
+        const response = await callApi(`rollcall/${student_id}`, 'PUT', body);
+        notify(
+          `Xóa điểm danh thành công`,
+          'success'
+        );
+        setLoading(false);
       } catch (error) {
         setLoading(false);
         notify(error.message, 'error');
@@ -63,12 +92,22 @@ const Lessons = (props: any) => {
     setMode(mode);
 
     try {
-      const response = await callApi(
+      setSelectedLesson(id);
+
+      let res = await callApi(
         `courses/${course_id}/members?limit=${100}`
       );
-      setSelectedLesson(id);
-      setStudents(response.data);
-      console.log(response.data);
+      if (mode == 1) {
+        res = await callApi(
+          `rollcall/lesson/${id}`
+        );
+      }
+      const response = res
+      if (mode == 0) {
+        setStudents(response.data);
+      } else {
+        setRollCall(response.filter((rollcall) => rollcall.status != "LATE"))
+      }
     } catch (error) {
       notify('Có lỗi xảy ra', 'error');
       setLoading(false);
@@ -225,11 +264,19 @@ const Lessons = (props: any) => {
 
       <StudentModal
         onClose={handleStudentModalClose}
-        isOpen={isStudentModalOpen}
+        isOpen={isStudentModalOpen && mode == 0}
         studentData={studentData}
         onConfirm={handleRollCall}
         mode={mode}
       ></StudentModal>
+
+      <StudentRollCallModal
+        onClose={handleStudentModalClose}
+        isOpen={isStudentModalOpen && mode == 1}
+        studentData={rollcall}
+        onConfirm={handleRemoveRollCall}
+        mode={mode}
+      ></StudentRollCallModal>
     </>
   );
 };
